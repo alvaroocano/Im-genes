@@ -1,0 +1,56 @@
+ <!DOCTYPE html>
+<html>
+<head>
+	<style>
+		select{
+      background-color: lightgray;
+		}
+	</style>
+    <script>
+    function cargarImg() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    var enlaces=this.responseText;
+    var lista_enlaces=enlaces.split(",");
+    var objeto_select=document.createElement("select");
+	objeto_select.addEventListener("change",cambiarImg);
+	objeto_select.id="opc_img"
+    for (i=0; i<lista_enlaces.length; i++)
+        {
+        var objeto_option=document.createElement("option");
+        objeto_option.innerHTML="Imagen "+(i+1);//lista_enlaces[i];
+		objeto_option.value=lista_enlaces[i];
+        objeto_select.appendChild(objeto_option);
+        }  
+    document.getElementById("demo").appendChild(objeto_select);
+    }
+  };
+  xhttp.open("GET", "imgs.txt", true);
+  xhttp.send();
+}
+
+	function cambiarImg(){
+		var obj_imagen=document.createElement("img");
+        obj_imagen.id="imgg";
+		var obj_select=document.getElementById("opc_img");
+        var indice=obj_select.selectedIndex;
+        var url=opc_img[indice].value;
+		var imagen=document.getElementById("imgg");
+        if(imagen==null){
+        var imagen=document.createElement("img");
+        imagen.id="ima";
+        imagen.src=url;
+        document.getElementById("demo").appendChild(imagen);
+        }
+	}
+    </script>
+</head>
+<body  onload="cargarImg()">
+
+<div id="demo">
+  
+</div>
+
+</body>
+</html>
